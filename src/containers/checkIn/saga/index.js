@@ -8,7 +8,7 @@ import {
 } from '../constant';
 import commonApi from '../../../middleware/commonApi';
 
-const sampleData = [{
+const sampleData = {
     'date':'2020-10-20',
     'appointments':[
        {
@@ -36,7 +36,7 @@ const sampleData = [{
           ]
        }
     ]
- }]
+ }
 
 function* getCheckinData(action){
     try{

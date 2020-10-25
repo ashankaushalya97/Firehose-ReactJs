@@ -3,9 +3,10 @@ import { Input,Button,Row,Col,Table } from 'antd';
 import './styles.css'
 import "antd/dist/antd.css";
 import FormStatus from '../components/FormStatus';
-import {useDispatch} from 'react-redux';
+import {useDispatch,useSelector} from 'react-redux';
 import {getCheckinData} from '../action';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { getCheckIn } from '../selectors';
 
 const columns = [
     {
@@ -15,7 +16,7 @@ const columns = [
     {
       title: 'APPT CONF. NO',
       className: 'column-money',
-      dataIndex: 'apptConfNo',
+      dataIndex: 'conf_no',
       align: 'right',
     },
     {
@@ -24,81 +25,52 @@ const columns = [
     },
     {
       title: 'CARRIER',
-      dataIndex: 'carrier',
+      dataIndex: 'checkin',
     //   render: (text,record,index) => (!record.checkInNo? <Input defaultValue={text} bordered={false}/> : <span>{text}</span>)
-      render: (text,record,index) => <Input defaultValue={text} bordered={false} disabled={record.checkInNo}/>
+      render: (data,record,index) => <Input defaultValue={data?data?.carrier:''} bordered={false} disabled={record.checkin}/>
     },
     {
       title: 'TRUCK',
-      dataIndex: 'truck',
-      render: (text,record,index) => <Input defaultValue={text} bordered={false} disabled={record.checkInNo} />
+      dataIndex: 'checkin',
+      render: (data,record,index) => <Input defaultValue={data?data?.truck_no:''} bordered={false} disabled={record.checkin} />
     },
     {
       title: 'CHECK-IN NO',
-      dataIndex: 'checkInNo',
+      dataIndex: 'checkin',
+      render: (data,record,index) => data? data?.checkin_no:''
     },
     {
       title: 'PENDING',
       dataIndex: 'pending',
-      render: (value,record,index) => (!record.checkInNo ? <Button type="primary" shape="round" style={{ background: "#F4D03F", borderColor: "#FCF3CF",color:"#000000" }}>CHECK IN</Button> : null)
+      render: (value,record,index) => (!record?.checkin?.checkin_no ? <Button onClick={(e)=>{e.stopPropagation();console.log('click')}} type="primary" shape="round" style={{ background: "#F4D03F", borderColor: "#FCF3CF",color:"#000000" }}>CHECK IN</Button> : null)
     },
   ];
-  
-  const data = [
-    {
-      key: '1',
-      time: '10:45',
-      apptConfNo: '456783',
-      customer: 'CAV',
-      carrier: 'BAYB',
-      truck: '2367',
-      checkInNo:'1234'
-    },
-    {
-      key: '2',
-      time: '10:45',
-      apptConfNo: '456783',
-      customer: 'CAV',
-      carrier: 'BAYB',
-      truck: '2367',
-    //   checkInNo:'1234'
-    },
-    {
-      key: '3',
-      time: '10:45',
-      apptConfNo: '456783',
-      customer: 'CAV',
-      carrier: 'BAYB',
-      truck: '2367',
-      checkInNo:'1234'
-    },
-    {
-      key: '4',
-      time: '10:45',
-      apptConfNo: '456783',
-      customer: 'CAV',
-      carrier: 'BAYB',
-      truck: '2367',
-      checkInNo:'1234'
-    },
-    {
-      key: '5',
-      time: '10:45',
-      apptConfNo: '456783',
-      customer: 'CAV',
-      carrier: 'BAYB',
-      truck: '2367',
-      checkInNo:'1234'
-    },
-  ];
+
 
 const CheckIn = () => {
-
+    const [selectedRow,setSelectedRow] = useState();
     const dispatch = useDispatch();
-
+    
     useEffect(()=>{
         dispatch(getCheckinData());
-    },[])
+    },[]);
+    useEffect(()=>{
+        console.log('row :::::::::::: ',selectedRow);
+    },[selectedRow]);
+
+    const checkInData = useSelector(getCheckIn);
+
+    let inboundData = [];
+    let outboundData = [];
+
+    if(checkInData && checkInData?.appointments?.length>0){
+        inboundData = checkInData?.appointments.filter(n => n.direction=='I');
+        outboundData = checkInData?.appointments.filter(n => n.direction=='O');
+    }
+
+    const handleSelection = (record) => {
+        record?.checkin? (selectedRow === record ? setSelectedRow(undefined) : setSelectedRow(record)): setSelectedRow(undefined);
+    }
 
     const TableHeader = ({title}) => (
         <>
@@ -146,13 +118,13 @@ const CheckIn = () => {
                             <div className="table-wrapper inbound-table">
                             <Table
                                 columns={columns}
-                                dataSource={data}
+                                dataSource={inboundData}
                                 bordered
                                 pagination={false}
                                 size="small"
                                 title={() => (<TableHeader title="INBOUND"/>)}
                                 onRow={(record) => ({
-                                    onClick: () => console.log('click ::::::::::: ',record),
+                                    onClick: () => handleSelection(record),
                                 })}
                                 rowClassName="table-row"
                             />
@@ -162,19 +134,20 @@ const CheckIn = () => {
                             <div className="table-wrapper outbound-table">
                             <Table
                                 columns={columns}
-                                dataSource={data}
+                                dataSource={outboundData}
                                 bordered
                                 pagination={false}
                                 size="small"
                                 title={() => (<TableHeader title="OUTBOUND"/>)}
+                                onRow={(record) => ({
+                                    onClick: () => handleSelection(record),
+                                })}
+                                rowClassName="table-row"
                             />
                             </div>
                         </Col>
                 </Row>
-                {/* <Row gutter={16}> */}
-                    <FormStatus/>
-                {/* </Row> */}
-                        
+                    <FormStatus data={selectedRow}/>
                 </div>
             </section>
         </>
