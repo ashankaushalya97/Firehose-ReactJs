@@ -8,6 +8,9 @@ const commonApi = {
     getCheckinData: () => {
       return axios.get(`${checkInDomain}`);
     },
+    saveCheckinData: (data) => {
+      return axios.post(`${checkInDomain}`,{...data});
+    },
 }
 
 export default commonApi;

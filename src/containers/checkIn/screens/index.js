@@ -4,9 +4,10 @@ import './styles.css'
 import "antd/dist/antd.css";
 import FormStatus from '../components/FormStatus';
 import {useDispatch,useSelector} from 'react-redux';
-import {getCheckinData} from '../action';
+import {getCheckinData,saveCheckin} from '../action';
 import { useEffect, useState } from 'react';
 import { getCheckIn } from '../selectors';
+import moment from 'moment';
 
 const CheckIn = () => {
     const [selectedRow,setSelectedRow] = useState();
@@ -58,6 +59,21 @@ const CheckIn = () => {
         dispatch(getCheckinData());
         clearFields();
     }
+    const handleSubmit = (record) => {
+        let date = new Date();
+        let obj = { 
+            'conf_no':record.conf_no, 
+            'checkin': {
+                'checkin_no': '' , 
+                'checkin_time': moment(date).format('HH:mm'), 
+                'checkin_date': moment(date).format('YYYY-MM-DD'), 
+                'carrier': carrier, 
+                'truck_no': truck, 
+            }
+           }
+        dispatch(saveCheckin(obj));
+        handleRefresh();
+    }
 
     const clearFields = () => {
         setInbound(undefined);
@@ -101,7 +117,7 @@ const CheckIn = () => {
         {
           title: 'PENDING',
           dataIndex: 'pending',
-          render: (value,record,index) => (!record?.checkin?.checkin_no ? <Button disabled={!(carrier && truck)} onClick={(e)=>{e.stopPropagation();console.log('click')}} type="primary" shape="round" style={{ background: "#F4D03F", borderColor: "#FCF3CF",color:"#000000" }}>CHECK IN</Button> : null)
+          render: (value,record,index) => (!record?.checkin?.checkin_no ? <Button disabled={!(carrier && truck)} onClick={(e)=>{e.stopPropagation();handleSubmit(record)}} type="primary" shape="round" style={{ background: "#F4D03F", borderColor: "#FCF3CF",color:"#000000" }}>CHECK IN</Button> : null)
         },
       ];
 

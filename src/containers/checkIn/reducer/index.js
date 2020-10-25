@@ -1,6 +1,8 @@
 import {
     GET_CHECKIN_DATA_SUCCESS,
-    GET_CHECKIN_DATA_FAIL
+    GET_CHECKIN_DATA_FAIL,
+    SAVE_CHECKIN_DATA_SUCCESS,
+    SAVE_CHECKIN_DATA_FAIL
   } from '../constant';
   import mockData from '../mockData';
 
@@ -16,6 +18,10 @@ import {
         return { ...initialState, checkin_data : mockData };
       case GET_CHECKIN_DATA_FAIL: 
         return { ...initialState, checkin_fail : action.error };
+      case SAVE_CHECKIN_DATA_SUCCESS: 
+        return { ...initialState, saveChekin_success : true};
+      case SAVE_CHECKIN_DATA_FAIL: 
+        return { ...initialState, saveCheckin_fail : action.error };
       
       default:
         return state;
