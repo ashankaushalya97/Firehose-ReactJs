@@ -3,6 +3,9 @@ import { Input,Button,Row,Col,Table } from 'antd';
 import './styles.css'
 import "antd/dist/antd.css";
 import FormStatus from '../components/FormStatus';
+import {useDispatch} from 'react-redux';
+import {getCheckinData} from '../action';
+import { useEffect } from 'react';
 
 const columns = [
     {
@@ -90,6 +93,12 @@ const columns = [
   ];
 
 const CheckIn = () => {
+
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        dispatch(getCheckinData());
+    },[])
 
     const TableHeader = ({title}) => (
         <>
