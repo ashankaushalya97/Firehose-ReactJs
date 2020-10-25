@@ -93,7 +93,7 @@ const sampleData = {
        {
           'date':'2020-10-20',
           'time':'13:45',
-          'customer':'CAV',
+          'customer':'DHL',
           'conf_no':'456783',
           'direction':'O',
           'checkin':{
