@@ -92,6 +92,78 @@ const sampleData = {
        },
        {
           'date':'2020-10-20',
+          'time':'09:22',
+          'customer':'DHL',
+          'conf_no':'14234',
+          'direction':'I',
+          'checkin':{
+             'checkin_no':'5634',
+             'checkin_time':'14:15',
+             'checkin_date':'2020-10-20',
+             'carrier':'BAYB',
+             'truck_no':'6543'
+          },
+          'booking_party':'Arrow Logistics',
+          'booking_contact':'Matt Bowser',
+          'contact_phone':'320-123-6789',
+          'orders':[
+             {
+                'order_no':'S930645345',
+                'po_no':'653123',
+                'position':'full'
+             }
+          ]
+       },
+       {
+          'date':'2020-10-20',
+          'time':'09:22',
+          'customer':'DHL',
+          'conf_no':'14234',
+          'direction':'I',
+          'checkin':{
+             'checkin_no':'5634',
+             'checkin_time':'14:15',
+             'checkin_date':'2020-10-20',
+             'carrier':'BAYB',
+             'truck_no':'6543'
+          },
+          'booking_party':'Arrow Logistics',
+          'booking_contact':'Matt Bowser',
+          'contact_phone':'320-123-6789',
+          'orders':[
+             {
+                'order_no':'S930645345',
+                'po_no':'653123',
+                'position':'full'
+             }
+          ]
+       },
+       {
+          'date':'2020-10-20',
+          'time':'09:22',
+          'customer':'DHL',
+          'conf_no':'14234',
+          'direction':'I',
+          'checkin':{
+             'checkin_no':'5634',
+             'checkin_time':'14:15',
+             'checkin_date':'2020-10-20',
+             'carrier':'BAYB',
+             'truck_no':'6543'
+          },
+          'booking_party':'Arrow Logistics',
+          'booking_contact':'Matt Bowser',
+          'contact_phone':'320-123-6789',
+          'orders':[
+             {
+                'order_no':'S930645345',
+                'po_no':'653123',
+                'position':'full'
+             }
+          ]
+       },
+       {
+          'date':'2020-10-20',
           'time':'13:45',
           'customer':'DHL',
           'conf_no':'456783',

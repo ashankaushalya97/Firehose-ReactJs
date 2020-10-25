@@ -117,7 +117,7 @@ const CheckIn = () => {
         {
           title: 'PENDING',
           dataIndex: 'pending',
-          render: (value,record,index) => (!record?.checkin?.checkin_no ? <Button disabled={!(carrier && truck)} onClick={(e)=>{e.stopPropagation();handleSubmit(record)}} type="primary" shape="round" style={{ background: "#F4D03F", borderColor: "#FCF3CF",color:"#000000" }}>CHECK IN</Button> : null)
+          render: (value,record,index) => (!record?.checkin?.checkin_no ? <Button disabled={!(carrier && truck)} onClick={(e)=>{e.stopPropagation();handleSubmit(record)}} type="primary" shape="round" style={{ background: "#F4D03F", borderColor: "#FCF3CF",color:"#000000"}}><span className="btn-text-checkin">CHECK IN</span></Button> : null)
         },
       ];
 
@@ -176,6 +176,8 @@ const CheckIn = () => {
                                     onClick: () => handleSelection(record),
                                 })}
                                 rowClassName="table-row"
+                                scroll={{ y: 240 ,x: 'max-content'}}
+                                // scroll={{ y: 'calc(100vh - 4em)' }}
                             />
                             </div>
                         </Col>
@@ -192,6 +194,7 @@ const CheckIn = () => {
                                     onClick: () => handleSelection(record),
                                 })}
                                 rowClassName="table-row"
+                                scroll={{ y: 240 ,x: 'max-content'}}
                             />
                             </div>
                         </Col>
