@@ -11,6 +11,9 @@ const commonApi = {
     saveCheckinData: (data) => {
       return axios.post(`${checkInDomain}`,{...data});
     },
+    requestPdf: (id) => {
+      return axios.get(`${checkInDomain}/${id}?print=1`);
+    },
 }
 
 export default commonApi;

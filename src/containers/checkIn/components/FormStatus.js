@@ -1,6 +1,6 @@
 import { Input,Button,Row,Col,Table } from 'antd';
 
-const FormStatus = ({data}) => {
+const FormStatus = ({data,onReprint}) => {
 
     return (
         <>
@@ -122,45 +122,6 @@ const FormStatus = ({data}) => {
                     )):null
                      
                 }   
-                {/* <div>
-                    <Row gutter={16} >
-                        <Col span={8}>
-                            <span className='footer-data-text' style={{display:'inline'}}>xxxxx</span>
-                        </Col>
-                        <Col span={8}>
-                            <span className="footer-data-text" style={{display:'inline',textAlign:'right'}}>NOISE</span>
-                        </Col>
-                        <Col span={8}>
-                            <span className="footer-data-text" style={{display:'inline',textAlign:'right'}}>PO:  xxxxx</span>
-                        </Col>
-                    </Row>
-                </div>    
-                <div>
-                    <Row gutter={16} >
-                        <Col span={8}>
-                            <span className='footer-data-text' style={{display:'inline'}}>xxxxx</span>
-                        </Col>
-                        <Col span={8}>
-                            <span className="footer-data-text" style={{display:'inline',textAlign:'right'}}>NOISE</span>
-                        </Col>
-                        <Col span={8}>
-                            <span className="footer-data-text" style={{display:'inline',textAlign:'right'}}>PO:  xxxxx</span>
-                        </Col>
-                    </Row>
-                </div>    
-                <div>
-                    <Row gutter={16} >
-                        <Col span={8}>
-                            <span className='footer-data-text' style={{display:'inline'}}>xxxxx</span>
-                        </Col>
-                        <Col span={8}>
-                            <span className="footer-data-text" style={{display:'inline',textAlign:'right'}}>NOISE</span>
-                        </Col>
-                        <Col span={8}>
-                            <span className="footer-data-text" style={{display:'inline',textAlign:'right'}}>PO:  xxxxx</span>
-                        </Col>
-                    </Row>
-                </div>  */}
             </Col>
             {/* column */}
             <Col span={6} className="footer-container" style={{alignContent:'center !important', minHeight:100}}>
@@ -188,7 +149,7 @@ const FormStatus = ({data}) => {
                     <Row gutter={16} >
                         <Col span={8}></Col>
                         <Col span={8}>
-                        <Button type="primary" shape="round" style={{ background: "#F4D03F", borderColor: "#F4D03F",color:"#000000" }}>RE-PRINT</Button>
+                        <Button type="primary" shape="round" style={{ background: "#F4D03F", borderColor: "#F4D03F",color:"#000000" }} onClick={()=> onReprint()}>RE-PRINT</Button>
                         </Col>
                         <Col span={8}></Col>
                     </Row>

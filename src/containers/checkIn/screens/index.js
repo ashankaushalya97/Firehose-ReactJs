@@ -4,9 +4,9 @@ import './styles.css'
 import "antd/dist/antd.css";
 import FormStatus from '../components/FormStatus';
 import {useDispatch,useSelector} from 'react-redux';
-import {getCheckinData,saveCheckin} from '../action';
+import {getCheckinData,saveCheckin,requestPdf} from '../action';
 import { useEffect, useState } from 'react';
-import { getCheckIn } from '../selectors';
+import { getCheckIn,getPdfUrl } from '../selectors';
 import moment from 'moment';
 
 const CheckIn = () => {
@@ -22,17 +22,15 @@ const CheckIn = () => {
 
     const dispatch = useDispatch();
     
-    useEffect(()=>{
-        dispatch(getCheckinData());
-    },[]);
-    useEffect(()=>{
-        console.log('row :::::::::::: ',selectedRow);
-    },[selectedRow]);
-
     let checkInData = useSelector(getCheckIn);
-
+    let pdfUrl = useSelector(getPdfUrl);
+    
     let inboundData = [];
     let outboundData = [];
+
+    useEffect(()=>{
+        dispatch(getCheckinData());
+    },[]);``
 
     if(checkInData && checkInData?.appointments?.length>0){
         inboundData = checkInData?.appointments.filter(n => n.direction=='I');
@@ -56,8 +54,8 @@ const CheckIn = () => {
         clearFields();
     }
     const handleRefresh = () => {
-        dispatch(getCheckinData());
         clearFields();
+        dispatch(getCheckinData());
     }
     const handleSubmit = (record) => {
         let date = new Date();
@@ -76,12 +74,15 @@ const CheckIn = () => {
     }
 
     const clearFields = () => {
+        setSelectedRow(undefined);
         setInbound(undefined);
         setOutbound(undefined);
         setCustomer('');
         setOrderNo('');
         setPO('');
         setConfNo('');
+        setTruck('');
+        setCarrier('');
     }
     const columns = [
         {
@@ -101,13 +102,16 @@ const CheckIn = () => {
         {
           title: 'CARRIER',
           dataIndex: 'checkin',
+          align: 'center',
         //   render: (text,record,index) => (!record.checkInNo? <Input defaultValue={text} bordered={false}/> : <span>{text}</span>)
-          render: (data,record,index) => <Input defaultValue={data?data?.carrier:''} bordered={false} disabled={record.checkin} onChange={(e)=>{setCarrier(e.target.value)}}/>
+          render: (data,record,index) => (record.checkin? <span style={{textAlign:'center',justifyContent:'center'}} >{data?.carrier}</span>:
+                    <Input  value={carrier} bordered={false} disabled={record.checkin} onChange={(e)=>{setCarrier(e.target.value)}}/>)
         },
         {
           title: 'TRUCK',
           dataIndex: 'checkin',
-          render: (data,record,index) => <Input defaultValue={data?data?.truck_no:''} bordered={false} disabled={record.checkin} onChange={(e)=>{setTruck(e.target.value)}} />
+        render: (data,record,index) => (record.checkin? <span>{data?.truck_no}</span> :
+                    <Input value={truck} bordered={false} disabled={record.checkin} onChange={(e)=>{setTruck(e.target.value)}} />)
         },
         {
           title: 'CHECK-IN NO',
@@ -199,7 +203,7 @@ const CheckIn = () => {
                             </div>
                         </Col>
                 </Row>
-                    <FormStatus data={selectedRow}/>
+                    <FormStatus data={selectedRow} onReprint={handleRefresh}/>
                 </div>
             </section>
         </>
