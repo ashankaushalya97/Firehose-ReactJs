@@ -41,7 +41,7 @@ function* requestPdfUrl(action){
     try{
         const result = yield call(commonApi.requestPdf,action.payload);
         if(result && result.status == '200'){
-            // window.open(result.data.response.url, "_blank")
+            window.open(result.data.response.url, "_blank")
             yield put(requestPdfSuccess(result.data.response));
         }
     }catch(error){
