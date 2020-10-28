@@ -44,7 +44,7 @@ const sampleData = {
           'orders':[
              {
                 'order_no':'S930645345',
-                'po_no':'',
+                'po_no':'654321',
                 'position':'full'
              }
           ]
@@ -141,7 +141,7 @@ const sampleData = {
        {
           'date':'2020-10-20',
           'time':'09:22',
-          'customer':'DHL',
+          'customer':'RBX',
           'conf_no':'14234',
           'direction':'I',
           'checkin':{
@@ -156,8 +156,8 @@ const sampleData = {
           'contact_phone':'320-123-6789',
           'orders':[
              {
-                'order_no':'S930645345',
-                'po_no':'653123',
+                'order_no':'D120381472',
+                'po_no':'123456',
                 'position':'full'
              }
           ]
@@ -180,8 +180,8 @@ const sampleData = {
           'contact_phone':'320-123-6789',
           'orders':[
              {
-                'order_no':'S930645345',
-                'po_no':'',
+                'order_no':'D120381472',
+                'po_no':'123456',
                 'position':'full'
              }
           ]

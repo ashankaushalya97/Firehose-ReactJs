@@ -30,7 +30,7 @@ const CheckIn = () => {
 
     useEffect(()=>{
         dispatch(getCheckinData());
-    },[]);``
+    },[]);
 
     if(checkInData && checkInData?.appointments?.length>0){
         inboundData = checkInData?.appointments.filter(n => n.direction=='I');
@@ -43,10 +43,10 @@ const CheckIn = () => {
     const handleSearch = () => {
         if(customer || orderNo || poNo || confNo){
             setInbound(inboundData.filter(n => n.customer.toLowerCase().includes(customer.toLowerCase()) 
-                && n.conf_no.includes(confNo)
-            ));  
+                && n.conf_no.includes(confNo) && n.orders.some(m => m.order_no.toLowerCase().includes(orderNo.toLowerCase()) && m.po_no.toLowerCase().includes(poNo.toLowerCase()))
+            ));
             setOutbound(outboundData.filter(n => n.customer.toLowerCase().includes(customer.toLowerCase()) 
-                && n.conf_no.includes(confNo)
+                && n.conf_no.includes(confNo) && n.orders.some(m => m.order_no.toLowerCase().includes(orderNo.toLowerCase()) && m.po_no.toLowerCase().includes(poNo.toLowerCase()))
             ));  
         }  
     }
