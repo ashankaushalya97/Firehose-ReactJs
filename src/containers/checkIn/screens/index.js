@@ -19,6 +19,7 @@ const CheckIn = () => {
     const [truck,setTruck] = useState();
     const [inbound,setInbound] = useState();
     const [outbound,setOutbound] = useState();
+    let date = new Date();
 
     const dispatch = useDispatch();
     
@@ -58,7 +59,6 @@ const CheckIn = () => {
         dispatch(getCheckinData());
     }
     const handleSubmit = (record) => {
-        let date = new Date();
         let obj = { 
             'conf_no':record.conf_no, 
             'checkin': {
@@ -125,21 +125,23 @@ const CheckIn = () => {
         },
       ];
 
-    const TableHeader = ({title}) => (
+    const TableHeader = ({type}) => {
+        return(
         <>
          <Row>
             <Col span={6} className="completed">
-               <span className="table-status-text">COMPLETED: 4</span>
+               <span className="table-status-text">COMPLETED: {type==='i'?inboundData.filter(m=> m?.checkin).length:outboundData.filter(m=> m?.checkin).length}</span>
             </Col>
             <Col span={12}>
-                <h3 className="table-header">{title}</h3>
+                <h3 className="table-header">{type==='i'?'INBOUND':'OUTBOUND'}</h3>
             </Col>
             <Col span={6} className="pending">
-                <span className="table-status-text">PENDING: 10</span>
+                <span className="table-status-text">PENDING: {type==='i'?inboundData.filter(m=> !m?.checkin).length:outboundData.filter(m=> !m?.checkin).length}</span>
             </Col>
          </Row>
         </>
-    );
+        )
+    };
 
     return(
         <>
@@ -148,7 +150,7 @@ const CheckIn = () => {
                 <Row gutter={16}>
                     <Col className="content" span={6} >
                         <Button className="btn-input" type="primary" shape="round" style={{ background: "#515A5A", borderColor: "#000000 " }} onClick={handleRefresh} ><span className="btn-text">REFRESH</span></Button>
-                        <span className='custom-text'>DATE 10/02/2020</span>
+                        <span className='custom-text'>DATE {moment(date).format('MM/DD/YYYY')}</span>
                     </Col>
                     <Col className="title-container" span={12}>
                         <h2 className="title">CHECK-IN-PAGE</h2>
@@ -175,13 +177,12 @@ const CheckIn = () => {
                                 bordered
                                 pagination={false}
                                 size="small"
-                                title={() => (<TableHeader title="INBOUND"/>)}
+                                title={() => (<TableHeader type="i"/>)}
                                 onRow={(record) => ({
                                     onClick: () => handleSelection(record),
                                 })}
                                 rowClassName="table-row"
                                 scroll={{ y: 240 ,x: 'max-content'}}
-                                // scroll={{ y: 'calc(100vh - 4em)' }}
                             />
                             </div>
                         </Col>
@@ -193,7 +194,7 @@ const CheckIn = () => {
                                 bordered
                                 pagination={false}
                                 size="small"
-                                title={() => (<TableHeader title="OUTBOUND"/>)}
+                                title={() => (<TableHeader type="o"/>)}
                                 onRow={(record) => ({
                                     onClick: () => handleSelection(record),
                                 })}
