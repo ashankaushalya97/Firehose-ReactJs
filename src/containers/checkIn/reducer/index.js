@@ -11,7 +11,7 @@ import {
   const initialState = {
     // checkin_data: {}
     checkin_data: mockData,
-    pdfUrl:"http://www.africau.edu/images/default/sample.pdf"
+    pdfUrl:null
   };
   
   const profileReducer = (state = initialState, action) => {
