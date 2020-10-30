@@ -71,6 +71,7 @@
 .table-wrapper {
     margin-top: 10px ;
     margin-bottom: 10px ;
+    min-height: 370px;
 }
 .inbound-table{
     margin-right: 5px;
